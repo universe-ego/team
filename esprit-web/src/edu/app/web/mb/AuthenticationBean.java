@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import edu.app.business.AuthenticationServiceLocal;
+import edu.app.persistence.Admin;
 import edu.app.persistence.User;
 
 
@@ -21,6 +22,7 @@ public class AuthenticationBean implements Serializable{
 	
 	private User user = new User();
 	private boolean loggedIn = false; 
+	private String userType = null;
 
 	private static final long serialVersionUID = 6710404278650523921L;
 	public AuthenticationBean() {
@@ -32,11 +34,15 @@ public class AuthenticationBean implements Serializable{
 		if (found != null) {
 			user = found;
 			loggedIn = true;
-			navigateTo = "/pages/admin/home";
+			if (user instanceof Admin) {
+				userType = "Admin";
+				navigateTo = "/pages/admin/home";
+			}
 		} else {
 			FacesMessage message = new FacesMessage("Bad credentials!");
 			FacesContext.getCurrentInstance().addMessage("login_form:login_submit", message);
 			loggedIn = false;
+			userType = null;
 			navigateTo = null;
 		}
 		return navigateTo;
@@ -46,6 +52,7 @@ public class AuthenticationBean implements Serializable{
 		String navigateTo = null;
 		loggedIn = false;
 		user = new User();
+		userType = null;
 		navigateTo = "/welcome";
 		return navigateTo;
 	}
@@ -73,6 +80,14 @@ public class AuthenticationBean implements Serializable{
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	
 	
