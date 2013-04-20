@@ -4,7 +4,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
                 
                 <h:form rendered="#{authBean.userType.equals('Admin')}">
-                	<h:commandLink value="CATEGORIES" action="/pages/admin/category/manage" />
+                	<h:panelGrid columns="1">
+                		<h:commandLink value="CATEGORIES" action="/pages/admin/category/manage" />
+                		<h:commandLink value="PRODUCTS" action="/pages/admin/product/manage" />
+                	</h:panelGrid>
+                	
                 </h:form>
                 	
 
